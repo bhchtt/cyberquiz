@@ -1,0 +1,45 @@
+{% extends 'awareness/base.html' %}
+{% block content %}
+<div class="registration-container">
+
+  <!-- заголовок -->
+  <div class="tm-glass-card">
+    <h2>Останні результати</h2>
+  </div>
+
+  <!-- таблиця результатів -->
+  <div class="tm-glass-card">
+    <div class="table-responsive">
+      <table class="table table-borderless text-light">
+        <thead>
+          <tr>
+            <th>Користувач</th>
+            <th>Результат</th>
+            <th>Дата</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for at in attempts %}
+          <tr class="align-middle">
+            <td>
+              {% if at.user %}
+                {{ at.user.username }}
+              {% elif at.user_name %}
+                {{ at.user_name }}
+              {% else %}
+                Гість
+              {% endif %}
+            </td>
+            <td>{{ at.score }} / {{ at.total }} ({{ at.percent }}%)</td>
+            <td>{{ at.created_at|date:"d.m.Y H:i" }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <a class="hero-button mt-3" href="{% url 'awareness:home' %}">Повернутись</a>
+</div>
+{% endblock %}
+

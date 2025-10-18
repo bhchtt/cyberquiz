@@ -1,0 +1,56 @@
+{% extends 'awareness/base.html' %}
+{% block content %}
+<div class="registration-container">
+
+  <!-- основний результат -->
+  <div class="tm-glass-card">
+    <h2>Результат: {{ attempt.score }} з {{ attempt.total }} ({{ attempt.percent }}%)</h2>
+  </div>
+
+  <!-- відповіді на питання -->
+  {% for a in answers %}
+    <div class="tm-glass-card">
+      <p><strong>Питання:</strong> {{ a.question.text }}</p>
+
+      {% if a.question.qtype == 'MCQ' %}
+        <p>
+          <strong>Ваш вибір:</strong>
+          {% if a.selected_choice %}
+            {% if a.selected_choice.is_correct %}
+              <span class="text-success">{{ a.selected_choice.text }}</span>
+            {% else %}
+              <span class="text-danger">{{ a.selected_choice.text }}</span>
+            {% endif %}
+          {% else %}
+            <span class="text-warning">Немає відповіді</span>
+          {% endif %}
+        </p>
+        <p>
+          <strong>Правильна відповідь:</strong>
+          {% for c in a.question.choices.all %}
+            {% if c.is_correct %}
+              {{ c.text }}
+            {% endif %}
+          {% endfor %}
+        </p>
+      {% else %}
+        <p>
+          <strong>Ваша відповідь:</strong>
+          {% if a.tf_answer == a.question.tf_correct_answer %}
+            <span class="text-success">{{ a.tf_answer|yesno:"Так,Ні" }}</span>
+          {% else %}
+            <span class="text-danger">{{ a.tf_answer|yesno:"Так,Ні" }}</span>
+          {% endif %}
+        </p>
+        <p><strong>Правильна відповідь:</strong> {{ a.question.tf_correct_answer|yesno:"Так,Ні" }}</p>
+      {% endif %}
+
+      {% if a.question.explanation %}
+        <p><strong>Пояснення:</strong> {{ a.question.explanation }}</p>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  <a class="hero-button mt-3" href="{% url 'awareness:home' %}">Повернутись</a>
+</div>
+{% endblock %}

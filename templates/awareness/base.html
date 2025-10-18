@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}CyberQuiz{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  <!-- Neural Background -->
+  <div class="neural-background"></div>
+  <div class="geometric-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+  </div>
+  <div class="neural-lines">
+      <div class="neural-line"></div>
+      <div class="neural-line"></div>
+      <div class="neural-line"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="glass">
+      <nav>
+          <a href="{% url 'awareness:home' %}" class="logo">CyberQuiz</a>
+          <ul class="nav-links">
+              <li><a href="{% url 'awareness:theory' %}">Теорія</a></li>
+              {% if user.is_authenticated %}
+                  <li><a href="{% url 'awareness:quiz_start' %}">Пройти тест</a></li>
+                  <li><a href="{% url 'awareness:results' %}">Результати</a></li>
+                  <li><a href="{% url 'awareness:logout' %}">Вихід</a></li>
+              {% else %}
+                  <li><a href="{% url 'awareness:login' %}">Логін</a></li>
+                  <li><a href="{% url 'awareness:signup' %}">Реєстрація</a></li>
+              {% endif %}
+              <li><a href="{% url 'awareness:contacts' %}">Контакти</a></li>
+          </ul>
+      </nav>
+  </header>
+
+  <!-- Контент сторінки -->
+  {% block content %}
+  <!-- Сюди будуть вставлятися дочірні секції: Hero, Features, Showcase, Timeline -->
+  {% endblock %}
+
+  <!-- Footer -->
+  <footer>
+      <div class="footer-content text-center text-light" style="background: rgba(0,0,0,0.2); padding: 20px;">
+          <p>© Created by bhchtt.</p>
+      </div>
+  </footer>
+
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

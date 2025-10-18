@@ -1,0 +1,15 @@
+{% extends 'awareness/base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Welcome Section -->
+<section class="hero">
+  <h1 class="hero-title">Ласкаво просимо до CyberQuiz</h1>
+  <div class="hero-quickstart">
+    <h2>Швидкий старт</h2>
+    <p>10 випадкових питань. Після — детальний звіт і підказки, де були помилки.</p>
+    <a href="{% url 'awareness:quiz_start' %}" class="hero-button">Почати зараз</a>
+  </div>
+</section>
+{% endblock %}
+

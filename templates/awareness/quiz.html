@@ -1,0 +1,28 @@
+{% extends 'awareness/base.html' %}
+{% block content %}
+
+<div class="test-container">
+  <div class="test-card">
+    <h2>Питання {{ index }} з {{ total }}</h2>
+    <p class="lead">{{ question.text }}</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="test-options">
+        {% for field in form %}
+          {% for choice in field.field.choices %}
+            <label>
+              <input type="radio" name="{{ field.name }}" value="{{ choice.0 }}">
+              {{ choice.1 }}
+            </label>
+          {% endfor %}
+        {% endfor %}
+      </div>
+
+      <button type="submit" class="test-submit">Відповісти</button>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
