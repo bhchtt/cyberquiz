@@ -30,11 +30,11 @@
   <header class="glass">
   <nav>
       <a href="{% url 'awareness:home' %}" class="logo">CyberQuiz</a>
-      <div class="burger" onclick="document.querySelector('.nav-links').classList.toggle('show')">
-          <span></span>
-          <span></span>
-          <span></span>
-      </div>
+      <div class="burger" onclick="this.classList.toggle('active'); document.querySelector('.nav-links').classList.toggle('show')">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
       <ul class="nav-links">
           <li><a href="{% url 'awareness:theory' %}">Теорія</a></li>
           {% if user.is_authenticated %}

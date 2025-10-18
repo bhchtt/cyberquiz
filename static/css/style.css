@@ -332,7 +332,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     padding: 60px 20px;
     min-height: calc(100vh - 80px);
     gap: 40px;
@@ -514,60 +514,107 @@ body {
 
 
 
+.burger {
+    display: none; /* ховаємо на великих екранах */
+    cursor: pointer;
+    width: 35px;
+    height: 28px;
+    position: relative;
+    z-index: 101;
+}
+
+.burger span {
+    display: block;
+    height: 4px;
+    background: linear-gradient(135deg, #e0a3ff, #ff69b4);
+    margin: 6px 0;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 8px #e0a3ff;
+}
+
+/* анімація бургеру при відкритті */
+.burger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+.burger.active span:nth-child(2) { opacity: 0; }
+.burger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+
 @media (max-width: 768px) {
-    header {
-        padding: 12px 20px;
-        width: 100%;
-        border-radius: 0;
-    }
+    .burger { display: block; }
 
     .nav-links {
         flex-direction: column;
-        gap: 8px;
-        background: rgba(0,0,0,0.3);
-        padding: 10px;
-        border-radius: 12px;
+        gap: 12px;
+        background: rgba(224,163,255,0.08);
+        backdrop-filter: blur(15px);
+        padding: 20px;
+        border-radius: 20px;
         position: absolute;
         top: 70px;
         right: 20px;
-        display: none; /* сховано, буде JS для відкриття */
+        display: none;
+        width: 220px;
+        box-shadow: 0 8px 20px rgba(224,163,255,0.3);
+        text-align: center;
     }
 
     .nav-links.show {
         display: flex;
+        animation: fadeIn 0.3s ease forwards;
     }
 
     .nav-links a {
         font-size: 1rem;
-        padding: 10px 15px;
+        padding: 12px 15px;
+        color: #fff;
+        text-shadow: 0 0 10px #e0a3ff;
     }
 
-    .logo {
-        font-size: 24px;
-    }
-
-    /* бургер кнопка */
-    .burger {
-        display: block;
-        cursor: pointer;
-        width: 30px;
-        height: 25px;
-        position: relative;
-    }
-
-    .burger span {
-        display: block;
-        height: 4px;
-        background: #e0a3ff;
-        margin: 5px 0;
-        border-radius: 2px;
-        transition: all 0.3s ease;
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 }
 
-/* для великих екранів ховаємо бургер */
-@media (min-width: 769px) {
-    .burger {
-        display: none;
+
+
+@media (max-width: 768px) {
+    .registration-container,
+    .auth-container {
+        justify-content: center;
+        padding: 40px 15px;
+        min-height: 100vh;
+    }
+
+    .registration-card,
+    .auth-card {
+        width: 100%;
+        max-width: 400px;
+        padding: 35px 25px;
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 15px;
+        gap: 20px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.8rem, 6vw, 3rem);
+    }
+
+    .hero-quickstart h2 {
+        font-size: 1.3rem;
+    }
+
+    .hero-quickstart p {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+
+    .hero-button {
+        padding: 12px 28px;
+        font-size: 0.95rem;
     }
 }
