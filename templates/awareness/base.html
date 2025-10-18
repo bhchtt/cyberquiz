@@ -27,24 +27,29 @@
       <div class="neural-line"></div>
   </div>
 
-  <!-- Header -->
   <header class="glass">
-      <nav>
-          <a href="{% url 'awareness:home' %}" class="logo">CyberQuiz</a>
-          <ul class="nav-links">
-              <li><a href="{% url 'awareness:theory' %}">Теорія</a></li>
-              {% if user.is_authenticated %}
-                  <li><a href="{% url 'awareness:quiz_start' %}">Пройти тест</a></li>
-                  <li><a href="{% url 'awareness:results' %}">Результати</a></li>
-                  <li><a href="{% url 'awareness:logout' %}">Вихід</a></li>
-              {% else %}
-                  <li><a href="{% url 'awareness:login' %}">Логін</a></li>
-                  <li><a href="{% url 'awareness:signup' %}">Реєстрація</a></li>
-              {% endif %}
-              <li><a href="{% url 'awareness:contacts' %}">Контакти</a></li>
-          </ul>
-      </nav>
-  </header>
+  <nav>
+      <a href="{% url 'awareness:home' %}" class="logo">CyberQuiz</a>
+      <div class="burger" onclick="document.querySelector('.nav-links').classList.toggle('show')">
+          <span></span>
+          <span></span>
+          <span></span>
+      </div>
+      <ul class="nav-links">
+          <li><a href="{% url 'awareness:theory' %}">Теорія</a></li>
+          {% if user.is_authenticated %}
+              <li><a href="{% url 'awareness:quiz_start' %}">Пройти тест</a></li>
+              <li><a href="{% url 'awareness:results' %}">Результати</a></li>
+              <li><a href="{% url 'awareness:logout' %}">Вихід</a></li>
+          {% else %}
+              <li><a href="{% url 'awareness:login' %}">Логін</a></li>
+              <li><a href="{% url 'awareness:signup' %}">Реєстрація</a></li>
+          {% endif %}
+          <li><a href="{% url 'awareness:contacts' %}">Контакти</a></li>
+      </ul>
+  </nav>
+</header>
+
 
   <!-- Контент сторінки -->
   {% block content %}
