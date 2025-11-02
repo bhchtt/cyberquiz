@@ -1,5 +1,11 @@
 /*
+=========================================
+  CYBERQUIZ STYLESHEET (Refactored)
+  Project: awareness_polished
+  Author: Taras Bohach (via Gemini)
+=========================================
 
+  ЗМІСТ:
   1. Глобальні стилі та Reset
   2. Фони (Gradient & Shapes)
   3. Глобальні Анімації (Keyframes)
@@ -609,7 +615,8 @@ nav {
 /* Картки для типів атак */
 .types-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  /* ▼▼▼ ОСЬ ЗМІНА ▼▼▼ */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 25px;
 }
 
@@ -749,6 +756,17 @@ nav {
 /* Адаптивність для карток "Практичні кейси" */
 @media (max-width: 768px) {
   .cases-grid {
-    grid-template-columns: 1fr; /* Одна колонка */
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .theory-container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .glass {
+    padding: 20px;
   }
 }
