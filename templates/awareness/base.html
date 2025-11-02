@@ -13,7 +13,6 @@
 </head>
 <body>
 
-  <!-- Neural Background -->
   <div class="neural-background"></div>
   <div class="geometric-shapes">
       <div class="shape"></div>
@@ -42,7 +41,7 @@
               <li><a href="{% url 'awareness:results' %}">Результати</a></li>
               <li><a href="{% url 'awareness:logout' %}">Вихід</a></li>
           {% else %}
-              <li><a href="{% url 'awareness:login' %}">Логін</a></li>
+              <li><a href="{% url 'awareness:login' %}">Вхід</a></li>
               <li><a href="{% url 'awareness:signup' %}">Реєстрація</a></li>
           {% endif %}
           <li><a href="{% url 'awareness:contacts' %}">Контакти</a></li>
@@ -50,13 +49,9 @@
   </nav>
 </header>
 
-
-  <!-- Контент сторінки -->
   {% block content %}
-  <!-- Сюди будуть вставлятися дочірні секції: Hero, Features, Showcase, Timeline -->
   {% endblock %}
 
-  <!-- Footer -->
   <footer>
       <div class="footer-content text-center text-light" style="background: rgba(0,0,0,0.2); padding: 20px;">
           <p>© Created by bhchtt.</p>

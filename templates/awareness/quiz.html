@@ -6,6 +6,11 @@
     <h2>Питання {{ index }} з {{ total }}</h2>
     <p class="lead">{{ question.text }}</p>
 
+    {% if question.image %}
+    <div class="question-image-container">
+        <img src="{{ question.image.url }}" alt="Зображення до питання" class="question-image">
+    </div>
+    {% endif %}
     <form method="post">
       {% csrf_token %}
       <div class="test-options">
@@ -25,4 +30,3 @@
 </div>
 
 {% endblock %}
-

@@ -11,8 +11,16 @@ class Question(models.Model):
     )
     text = models.TextField()
     qtype = models.CharField(max_length=3, choices=QTYPE_CHOICES)
+
+    image = models.ImageField(
+        upload_to='question_images/',
+        blank=True,
+        null=True,
+        verbose_name="Зображення до питання"
+    )
+
     explanation = models.TextField(blank=True, null=True)
-    tf_correct_answer = models.BooleanField(null=True, blank=True)  # для ТФ питань
+    tf_correct_answer = models.BooleanField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.text[:60]} ({self.qtype})"
@@ -30,7 +38,7 @@ class Attempt(models.Model):
     user_name = models.CharField(max_length=100, blank=True, null=True)
     score = models.IntegerField()
     total = models.IntegerField()
-    percent = models.FloatField(default=0.0)  # додаємо дефолт
+    percent = models.FloatField(default=0.0)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -41,9 +49,7 @@ class Answer(models.Model):
     attempt = models.ForeignKey(Attempt, related_name='answers', on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     selected_choice = models.ForeignKey(Choice, null=True, blank=True, on_delete=models.SET_NULL)
-    tf_answer = models.BooleanField(null=True, blank=True)  # True/False для ТФ
+    tf_answer = models.BooleanField(null=True, blank=True)
 
     def __str__(self):
         return f"Answer to Q#{self.question.id} in attempt #{self.attempt.id}"
-
-

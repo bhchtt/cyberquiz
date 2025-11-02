@@ -2,12 +2,10 @@
 {% block content %}
 <div class="registration-container">
 
-  <!-- основний результат -->
   <div class="tm-glass-card">
     <h2>Результат: {{ attempt.score }} з {{ attempt.total }} ({{ attempt.percent }}%)</h2>
   </div>
 
-  <!-- відповіді на питання -->
   {% for a in answers %}
     <div class="tm-glass-card">
       <p><strong>Питання:</strong> {{ a.question.text }}</p>

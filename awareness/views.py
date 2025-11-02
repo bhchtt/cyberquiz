@@ -3,8 +3,8 @@ from .models import Question, Choice, Attempt, Answer
 from .forms import TFForm, MCQForm, NameForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
 import random
+from django.contrib.auth import logout, login
 
 def home(request):
     total_attempts = Attempt.objects.count()
@@ -19,32 +19,7 @@ def theory(request):
 
 def contacts(request):
     return render(request, 'awareness/contacts.html')
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login, logout
-from .models import Question, Choice, Attempt, Answer
-from .forms import TFForm, MCQForm
-import random
 
-# Головна сторінка
-def home(request):
-    total_attempts = Attempt.objects.count()
-    total_users = Attempt.objects.values('user').distinct().count()
-    return render(request, 'awareness/home.html', {
-        'total_attempts': total_attempts,
-        'total_users': total_users
-    })
-
-# Теоретичний матеріал
-def theory(request):
-    return render(request, 'awareness/theory.html')
-
-# Контакти
-def contacts(request):
-    return render(request, 'awareness/contacts.html')
-
-# Реєстрація користувача
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -56,13 +31,13 @@ def signup(request):
         form = UserCreationForm()
     return render(request, 'awareness/signup.html', {'form': form})
 
-# Результати останніх 50 спроб
+
 @login_required
 def results(request):
     attempts = Attempt.objects.order_by('-created_at')[:50]
     return render(request, 'awareness/results.html', {'attempts': attempts})
 
-# Початок тесту
+
 @login_required
 def quiz_start(request):
     qs = list(Question.objects.all())
@@ -77,7 +52,6 @@ def quiz_start(request):
     request.session.modified = True
     return redirect('awareness:quiz_question')
 
-# Питання тесту
 @login_required
 def quiz_question(request):
     ids = request.session.get('quiz_qids')
@@ -86,14 +60,12 @@ def quiz_question(request):
 
     idx = request.session.get('quiz_index', 0)
     if idx >= len(ids):
-        # Завершення тесту
         score = request.session.get('quiz_score', 0)
         total = len(ids)
         percent = round(score / total * 100, 2) if total > 0 else 0.0
 
         attempt = Attempt.objects.create(user=request.user, score=score, total=total, percent=percent)
 
-        # Зберігаємо відповіді
         answers = request.session.get('quiz_answers', {})
         for qid, ans in answers.items():
             q = Question.objects.get(id=int(qid))
@@ -104,14 +76,12 @@ def quiz_question(request):
                 tf_val = True if ans == 'True' else False
                 Answer.objects.create(attempt=attempt, question=q, tf_answer=tf_val)
 
-        # Очищуємо сесію
         for key in ['quiz_qids', 'quiz_index', 'quiz_score', 'quiz_answers']:
             request.session.pop(key, None)
         request.session.modified = True
 
         return redirect('awareness:quiz_result_detail', attempt_id=attempt.id)
 
-    # Поточне питання
     q = Question.objects.get(id=ids[idx])
     if q.qtype == Question.TYPE_MCQ:
         form = MCQForm(choices_list=[(c.id, c.text) for c in q.choices.all()])
@@ -149,7 +119,6 @@ def quiz_question(request):
         'total': len(ids)
     })
 
-# Деталі результату
 @login_required
 def quiz_result_detail(request, attempt_id):
     attempt = get_object_or_404(Attempt, id=attempt_id)
@@ -159,7 +128,6 @@ def quiz_result_detail(request, attempt_id):
         'answers': answers
     })
 
-# Логаут
 def logout_view(request):
     logout(request)
     return redirect('awareness:home')
